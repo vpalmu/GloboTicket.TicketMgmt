@@ -1,5 +1,4 @@
 ﻿using GloboTicket.TicketManagement.Application.Contracts.Persistence;
-using GloboTicket.TicketManagement.Persistance;
 using GloboTicket.TicketManagement.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +19,7 @@ namespace GloboTicket.TicketManagement.Persistance
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddTransient<DbInitialiser>();
 
             return services;    
         }

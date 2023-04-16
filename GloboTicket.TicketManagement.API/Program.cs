@@ -1,10 +1,17 @@
 using GloboTicket.TicketManagement.API;
+using GloboTicket.TicketManagement.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.ConfigureServices()
-                 .ConfigurePipelines();
+                 .ConfigureMiddleware();
 
-await app.ResetDatabaseAsync();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbInitializer = services.GetRequiredService<DbInitialiser>();
+
+    dbInitializer.Run();
+}
 
 app.Run();
 
